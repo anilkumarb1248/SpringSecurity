@@ -1,0 +1,13 @@
+
+server:
+  port: 2023
+#  servlet:
+#    context-path: /SpringSecurity
+
+## For H2 embedded data source we no need to configure anything here.
+## To configure any other data source for JDBC (like mysql, oracle ...)
+#spring:
+#  datasource:
+#    url:
+#    username:
+#    password:

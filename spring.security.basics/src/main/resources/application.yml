@@ -1,0 +1,15 @@
+
+server:
+  port: 2023
+#  servlet:
+#    context-path: /demo
+
+#spring:
+#  security:
+#    user:
+#      name: anil
+#      password: anil
+
+#logging:
+#  level:
+#    root: DEBUG

@@ -1,0 +1,10 @@
+-- Embedded LDAP Configuration
+    https://spring.io/guides/gs/authenticating-ldap/
+
+    http://localhost:2023/user
+    Start the service and hit the above url.
+    you should be redirected to a login page provided by Spring Security.
+    Enter a user name of "ben" and a password of "benspassword".
+
+-- Actual LDAP Server
+    https://medium.com/codeops/spring-boot-security-ldap-example-1ce1bdfc5816

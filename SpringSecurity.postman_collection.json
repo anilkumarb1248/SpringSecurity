@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "9cd601bb-2c95-4929-b7bc-0155ad868ae9",
+		"name": "SpringSecurity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "JWT",
+			"item": [
+				{
+					"name": "GetJWTToken-USER Role",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"anil\",\r\n    \"password\":\"anil\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2023/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetJWTToken-ADMIN Role",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"bandari\",\r\n    \"password\":\"bandari\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:2023/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user call",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmlsIiwiaWF0IjoxNjg3NzgxODAyLCJleHAiOjE2ODc3OTk4MDJ9.UarphkUt9IB1Vx72BqWUBnifiC2duWnPavYbQ0cm-a1bfPI3wLzYGk1PeOVDGsQZKbuNq7EnsA-IsU24XsBTyg",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:2023/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin call",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW5kYXJpIiwiaWF0IjoxNjg3NzgyMTA3LCJleHAiOjE2ODc4MDAxMDd9.IEZchKroGYiSZ3eZPJjHYtDBadRJqcBwJp7kzMFKgVt2wF8frWdYE3PDRkUdnZjIZIH_kfRD7Xk0OCl7sNQ08g",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:2023/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2023",
+							"path": [
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

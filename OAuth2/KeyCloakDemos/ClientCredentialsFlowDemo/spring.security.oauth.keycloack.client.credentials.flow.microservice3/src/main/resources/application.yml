@@ -1,0 +1,18 @@
+
+server:
+  port: 2052
+
+client:
+  config:
+    gateways:
+      keycloak:
+        clientId: oauth-client-credentials-flow-demo-client
+        clientSecret: awOkuYY3KiGdqdX7KFdCLhjZtFq2dPNK
+        tokenEndPoint: http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token
+        clientScope: openid
+        grantType: client_credentials
+        serviceName: keycloak
+
+    keycloak:
+      host: http://localhost:2051
+      hello-endpoint: /service2/hello

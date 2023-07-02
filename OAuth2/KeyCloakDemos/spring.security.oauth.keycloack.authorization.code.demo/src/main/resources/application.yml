@@ -1,0 +1,19 @@
+
+server:
+  port: 2023
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: oauth2-keycloak-demo-client
+            client-secret: SmHM06w5fYKRg4ilYHpyxQ0gwroh2amn
+            scope: openid, email, roles, profile, phone
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:2023/login/oauth2/code/oauth2-keycloak-demo-client
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:2020/realms/SpringBootKeycloak
+

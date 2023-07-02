@@ -17,8 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
-
-
     private UserDetailsService userDetailsService;
     private PasswordEncoder  passwordEncoder;
     private CustomJwtAuthenticationFilter  customJwtAuthenticationFilter;

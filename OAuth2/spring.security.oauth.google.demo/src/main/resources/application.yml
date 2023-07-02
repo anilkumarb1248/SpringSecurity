@@ -1,0 +1,11 @@
+server:
+  port: 2054
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 424044437146-qjj9go4sakepjacc33bitcccf2avmos8.apps.googleusercontent.com
+            client-secret: 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

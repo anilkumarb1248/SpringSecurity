@@ -124,6 +124,715 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "KeyCloak Server Acces Token",
+			"item": [
+				{
+					"name": "Code Authorization Flow",
+					"item": [
+						{
+							"name": "Access Token",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "client_credentials",
+											"type": "default"
+										},
+										{
+											"key": "client_id",
+											"value": "oauth2-keycloak-demo-client",
+											"type": "default"
+										},
+										{
+											"key": "client_secret",
+											"value": "SmHM06w5fYKRg4ilYHpyxQ0gwroh2amn",
+											"type": "default"
+										},
+										{
+											"key": "scope",
+											"value": "openid",
+											"type": "default"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "text"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"realms",
+										"SpringBootKeycloak",
+										"protocol",
+										"openid-connect",
+										"token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PreRequestScript for Access Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url:'http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token',\r",
+											"    method:'POST',\r",
+											"    headers : {\r",
+											"    'Content-Type': 'application/x-www-form-urlencoded',\r",
+											"    },\r",
+											"    \r",
+											"    body:{\r",
+											"        'mode':'urlencoded',\r",
+											"        urlencoded:[\r",
+											"            { key: 'grant_type', value: 'client_credentials', disable: false },\r",
+											"            { key: 'client_id', value: 'oauth2-keycloak-demo-client', disable: false},\r",
+											"            { key: 'client_secret', value: 'SmHM06w5fYKRg4ilYHpyxQ0gwroh2amn', disable: false },\r",
+											"            { key: 'scope', value: 'openid', disable: false}\r",
+											"        ]\r",
+											"    }\r",
+											"},\r",
+											"    function(error, response){\r",
+											"        pm.environment.set(\"access_token\", response.json().access_token);\r",
+											"    }\r",
+											");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token/introspect",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"realms",
+										"SpringBootKeycloak",
+										"protocol",
+										"openid-connect",
+										"token",
+										"introspect"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify Token - NW",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token/introspect",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"realms",
+										"SpringBootKeycloak",
+										"protocol",
+										"openid-connect",
+										"token",
+										"introspect"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "KeyCloak Endpoints",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/realms/SpringBootKeycloak/.well-known/openid-configuration",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"realms",
+										"SpringBootKeycloak",
+										".well-known",
+										"openid-configuration"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authrize Endpoint (loads login form)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/auth?response_type=code&client_id=oauth2-keycloak-demo-client",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"realms",
+										"SpringBootKeycloak",
+										"protocol",
+										"openid-connect",
+										"auth"
+									],
+									"query": [
+										{
+											"key": "response_type",
+											"value": "code"
+										},
+										{
+											"key": "client_id",
+											"value": "oauth2-keycloak-demo-client"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User Auth",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "default"
+										},
+										{
+											"key": "client_id",
+											"value": "oauth2-keycloak-demo-client",
+											"type": "default"
+										},
+										{
+											"key": "client_secret",
+											"value": "SmHM06w5fYKRg4ilYHpyxQ0gwroh2amn",
+											"type": "default"
+										},
+										{
+											"key": "username",
+											"value": "anil",
+											"type": "default"
+										},
+										{
+											"key": "password",
+											"value": "anil",
+											"type": "default"
+										},
+										{
+											"key": "response_type",
+											"value": "token",
+											"type": "default"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "text"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"realms",
+										"SpringBootKeycloak",
+										"protocol",
+										"openid-connect",
+										"token"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Client Credentials Flow",
+					"item": [
+						{
+							"name": "Micro Service 1",
+							"item": [
+								{
+									"name": "RestTemplate Call",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url:'http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token',\r",
+													"    method:'POST',\r",
+													"    headers : {\r",
+													"    'Content-Type': 'application/x-www-form-urlencoded',\r",
+													"    },\r",
+													"    \r",
+													"    body:{\r",
+													"        'mode':'urlencoded',\r",
+													"        urlencoded:[\r",
+													"            { key: 'grant_type', value: 'client_credentials', disable: false },\r",
+													"            { key: 'client_id', value: 'oauth-client-credentials-flow-demo-client', disable: false},\r",
+													"            { key: 'client_secret', value: 'awOkuYY3KiGdqdX7KFdCLhjZtFq2dPNK', disable: false },\r",
+													"            { key: 'scope', value: 'openid', disable: false}\r",
+													"        ]\r",
+													"    },\r",
+													"    },\r",
+													"    function(error, response){\r",
+													"        console.log(response.json().access_token);\r",
+													"        pm.environment.set(\"ACCESS_TOKEN\", response.json().access_token);\r",
+													"    }\r",
+													");"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{ACCESS_TOKEN}}",
+												"type": "default"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:2050/service1/caller/restTemplate",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "2050",
+											"path": [
+												"service1",
+												"caller",
+												"restTemplate"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "WebClient",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url:'http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token',\r",
+													"    method:'POST',\r",
+													"    headers : {\r",
+													"    'Content-Type': 'application/x-www-form-urlencoded',\r",
+													"    },\r",
+													"    \r",
+													"    body:{\r",
+													"        'mode':'urlencoded',\r",
+													"        urlencoded:[\r",
+													"            { key: 'grant_type', value: 'client_credentials', disable: false },\r",
+													"            { key: 'client_id', value: 'oauth-client-credentials-flow-demo-client', disable: false},\r",
+													"            { key: 'client_secret', value: 'awOkuYY3KiGdqdX7KFdCLhjZtFq2dPNK', disable: false },\r",
+													"            { key: 'scope', value: 'openid', disable: false}\r",
+													"        ]\r",
+													"    },\r",
+													"    },\r",
+													"    function(error, response){\r",
+													"        console.log(response.json().access_token);\r",
+													"        pm.environment.set(\"ACCESS_TOKEN\", response.json().access_token);\r",
+													"    }\r",
+													");"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{ACCESS_TOKEN}}",
+												"type": "default"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:2050/service1/caller/webclient",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "2050",
+											"path": [
+												"service1",
+												"caller",
+												"webclient"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Micro Service 2",
+							"item": [
+								{
+									"name": "hello",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.sendRequest({\r",
+													"    url:'http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token',\r",
+													"    method:'POST',\r",
+													"    headers : {\r",
+													"    'Content-Type': 'application/x-www-form-urlencoded',\r",
+													"    },\r",
+													"    \r",
+													"    body:{\r",
+													"        'mode':'urlencoded',\r",
+													"        urlencoded:[\r",
+													"            { key: 'grant_type', value: 'client_credentials', disable: false },\r",
+													"            { key: 'client_id', value: 'oauth-client-credentials-flow-demo-client', disable: false},\r",
+													"            { key: 'client_secret', value: 'awOkuYY3KiGdqdX7KFdCLhjZtFq2dPNK', disable: false },\r",
+													"            { key: 'scope', value: 'openid', disable: false}\r",
+													"        ]\r",
+													"    },\r",
+													"    },\r",
+													"    function(error, response){\r",
+													"        console.log(response.json().access_token);\r",
+													"        pm.environment.set(\"ACCESS_TOKEN\", response.json().access_token);\r",
+													"    }\r",
+													");"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{ACCESS_TOKEN}}",
+												"type": "default"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:2051/service2/hello",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "2051",
+											"path": [
+												"service2",
+												"hello"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Micro Service 3",
+							"item": [
+								{
+									"name": "data",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "basic",
+											"basic": [
+												{
+													"key": "password",
+													"value": "anil",
+													"type": "string"
+												},
+												{
+													"key": "username",
+													"value": "anil",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:2052/data",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "2052",
+											"path": [
+												"data"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Access Token",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "client_credentials",
+											"type": "default"
+										},
+										{
+											"key": "client_id",
+											"value": "oauth-client-credentials-flow-demo-client",
+											"type": "default"
+										},
+										{
+											"key": "client_secret",
+											"value": "awOkuYY3KiGdqdX7KFdCLhjZtFq2dPNK",
+											"type": "default"
+										},
+										{
+											"key": "scope",
+											"value": "openid",
+											"type": "default"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "text"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"realms",
+										"SpringBootKeycloak",
+										"protocol",
+										"openid-connect",
+										"token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PreRequestScript for Access Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({\r",
+											"    url:'http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token',\r",
+											"    method:'POST',\r",
+											"    headers : {\r",
+											"    'Content-Type': 'application/x-www-form-urlencoded',\r",
+											"    },\r",
+											"    \r",
+											"    body:{\r",
+											"        'mode':'urlencoded',\r",
+											"        urlencoded:[\r",
+											"            { key: 'grant_type', value: 'client_credentials', disable: false },\r",
+											"            { key: 'client_id', value: 'oauth-client-credentials-flow-demo-client', disable: false},\r",
+											"            { key: 'client_secret', value: 'awOkuYY3KiGdqdX7KFdCLhjZtFq2dPNK', disable: false },\r",
+											"            { key: 'scope', value: 'openid', disable: false}\r",
+											"        ]\r",
+											"    }\r",
+											"    },\r",
+											"    function(error, response){\r",
+											"        pm.environment.set(\"access_token\", response.json().access_token);\r",
+											"    }\r",
+											");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/token/introspect",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"realms",
+										"SpringBootKeycloak",
+										"protocol",
+										"openid-connect",
+										"token",
+										"introspect"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	]
 }

@@ -1,0 +1,23 @@
+server:
+  port: 2050
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: oauth-client-credentials-flow-demo-client
+            client-secret: awOkuYY3KiGdqdX7KFdCLhjZtFq2dPNK
+            scope: openid, email, roles, profile, phone
+            authorization-grant-type: client_credentials
+            #redirect-uri is not required as it is a client credentials flow (service to service authentication)
+
+        provider:
+          keycloak:
+            # You can find the URL's like issuer-url, token url and jwk-uri key clock server
+            issuer-uri: http://localhost:2020/realms/SpringBootKeycloak
+
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:2020/realms/SpringBootKeycloak/protocol/openid-connect/certs
